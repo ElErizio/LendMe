@@ -1,10 +1,12 @@
+using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class EnemyFollows : MonoBehaviour
 {
     public NavMeshAgent agent;
-    public Transform player;
+    Animator anim;
+    public Player player;
 
     public LayerMask whatIsGround, whatIsPlayer;
 
@@ -16,10 +18,14 @@ public class EnemyFollows : MonoBehaviour
     public Vector3 walkPoint;
     bool walkPointSet;
     public float walkPointRange;
+    public Avatar walkAvatar;
+    public AnimatorController walkController;
 
     // Para atacar
     public float timeBetweenAttacks;
     bool alreadyAttacked;
+    public Avatar attackAvatar;
+    public AnimatorController attackController;
 
     // Estados
     public float sightRange, attackRange;
@@ -40,19 +46,30 @@ public class EnemyFollows : MonoBehaviour
         // Si el jugador está dentro del rango de vision pero no en el de ataque, se activa el chase para seguirlo
         if (playerInSightRange && !playerInAttackRange) 
         { 
+            if(anim.runtimeAnimatorController != walkController)
+            {
+                anim.runtimeAnimatorController = walkController;
+                anim.avatar = walkAvatar;
+            }
             ChasePlayer();
         }
 
         // Si el jugador está en rango de vision y de ataque, se activa para atacar
         if (playerInSightRange && playerInAttackRange)
-        { 
+        {
+            if (anim.runtimeAnimatorController != attackController)
+            {
+                anim.runtimeAnimatorController = attackController;
+                anim.avatar = attackAvatar;
+            }
             AttackPlayer();
         } 
     }
     private void Awake()
     {
-        player = GameObject.Find("JugadorXR").transform;
+        player = FindAnyObjectByType<Player>();
         agent = GetComponent<NavMeshAgent>();
+        anim = GetComponent<Animator>();
     }
 
     private void Patroll()
@@ -91,18 +108,20 @@ public class EnemyFollows : MonoBehaviour
 
     private void ChasePlayer()
     {
-        agent.SetDestination(player.position);
+        agent.SetDestination(player.transform.position);
     }
 
     private void AttackPlayer()
     {
         agent.SetDestination(transform.position);
 
-        transform.LookAt(player);
+        transform.LookAt(player.transform);
 
         if (!alreadyAttacked)
-        { 
+        {
             // 
+            print("Lo ataca");
+            player.RecibirDanio();
 
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
