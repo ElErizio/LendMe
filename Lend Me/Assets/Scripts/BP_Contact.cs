@@ -4,15 +4,21 @@ using UnityEngine;
 
 public class BP_Contact : MonoBehaviour
 {
+    public int puntos = 100; // Puedes ajustar este valor según el objeto
+
     private void OnTriggerEnter(Collider other)
     {
-        // Asumimos que la mochila tiene una etiqueta llamada "Backpack"
         if (other.CompareTag("Backpack"))
         {
-            // Notificar a la mochila que el objeto ha sido recogido
             other.GetComponent<BackP>().AddItem(this.gameObject);
 
-            // Desactivar el objeto para "recogerlo"
+            // Notificar al jugador para añadir puntos
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            if (player != null)
+            {
+                player.GetComponent<Player>().AñadirPuntos(puntos);
+            }
+
             gameObject.SetActive(false);
         }
     }
