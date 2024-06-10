@@ -10,11 +10,13 @@ public class Player : MonoBehaviour
 
     public GameObject panelDerrota;
     public GameObject panelVictoria;
+    public Text pointsText; 
 
     void Start()
     {
         panelDerrota.SetActive(false);
         panelVictoria.SetActive(false);
+        ActualizarPuntosTexto(); 
     }
 
     public void RecibirDanio()
@@ -22,17 +24,16 @@ public class Player : MonoBehaviour
         vida--;
         if (vida <= 0)
         {
-            print("GameOver");
             MostrarPanelDerrota();
         }
     }
 
-    public void AñadirPuntos(int cantidad)
+    public void AnadirPuntos(int cantidad)
     {
         puntos += cantidad;
+        ActualizarPuntosTexto();
         if (puntos >= 5000)
         {
-            print("Victoria");
             MostrarPanelVictoria();
         }
     }
@@ -47,5 +48,10 @@ public class Player : MonoBehaviour
     {
         Time.timeScale = 0;
         panelVictoria.SetActive(true);
+    }
+
+    void ActualizarPuntosTexto()
+    {
+        pointsText.text = "Puntos: " + puntos.ToString();
     }
 }

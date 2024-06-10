@@ -16,7 +16,7 @@ public class BP_Contact : MonoBehaviour
             GameObject player = GameObject.FindGameObjectWithTag("Player");
             if (player != null)
             {
-                player.GetComponent<Player>().AñadirPuntos(puntos);
+                player.GetComponent<Player>().AnadirPuntos(puntos);
             }
 
             gameObject.SetActive(false);
