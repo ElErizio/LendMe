@@ -2,52 +2,64 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class Player : MonoBehaviour
 {
     public int vida = 3;
     public int puntos = 0;
 
-    public GameObject panelDerrota;
+    public GameObject defeatPanel;
     public GameObject panelVictoria;
-    public Text pointsText; 
+    public TMP_Text pointsText;
 
+
+    private void Awake()
+    {
+
+        print(panelVictoria.name);
+    }
     void Start()
     {
-        panelDerrota.SetActive(false);
-        panelVictoria.SetActive(false);
-        ActualizarPuntosTexto(); 
+
+        
+        panelVictoria.gameObject.SetActive(false);
+        
+        defeatPanel.gameObject.SetActive(false);
+        
+        ActualizarPuntosTexto();
     }
 
-    public void RecibirDanio()
+    public int RecibirDanio()
     {
         vida--;
         if (vida <= 0)
         {
-            MostrarPanelDerrota();
+            MostrardefeatPanel();
         }
+        return vida;
     }
 
     public void AnadirPuntos(int cantidad)
     {
         puntos += cantidad;
         ActualizarPuntosTexto();
-        if (puntos >= 5000)
+        if (puntos >= 00)
         {
             MostrarPanelVictoria();
         }
     }
 
-    void MostrarPanelDerrota()
+    void MostrardefeatPanel()
     {
         Time.timeScale = 0;
-        panelDerrota.SetActive(true);
+        defeatPanel.gameObject.SetActive(true);
     }
 
     void MostrarPanelVictoria()
     {
         Time.timeScale = 0;
-        panelVictoria.SetActive(true);
+        panelVictoria.gameObject.SetActive(true);
     }
 
     void ActualizarPuntosTexto()

@@ -39,8 +39,12 @@ public class EnemyFollows : MonoBehaviour
 
         // Si el jugador no está en rango de vision ni de ataque patrulla
         if (!playerInSightRange && !playerInAttackRange)
-        { 
-            
+        {
+            if (anim.runtimeAnimatorController != walkController)
+            {
+                anim.runtimeAnimatorController = walkController;
+                anim.avatar = walkAvatar;
+            }
         }
 
         // Si el jugador está dentro del rango de vision pero no en el de ataque, se activa el chase para seguirlo
@@ -115,13 +119,17 @@ public class EnemyFollows : MonoBehaviour
     {
         agent.SetDestination(transform.position);
 
-        transform.LookAt(player.transform);
+        //transform.LookAt(player.transform);
 
         if (!alreadyAttacked)
         {
             // 
             print("Lo ataca");
-            player.RecibirDanio();
+
+            if (player.RecibirDanio() <= 0)
+            {
+                Destroy(gameObject);
+            }
 
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
