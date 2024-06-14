@@ -11,6 +11,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/LvL_1.unity
     guid: 4db61d64ca2d4b14c8f236ba10bffd6c
+  - enabled: 1
+    path: Assets/Scenes/Ganaste.unity
+    guid: 9ba57f041696bb24b81b4ff7add899b9
+  - enabled: 1
+    path: Assets/Scenes/Perdiste.unity
+    guid: 0752a707f301f054194eaa90dc6a32da
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: bfa1182bd221b4ca89619141f66f1260, type: 2}
     Unity.XR.WindowsMR.Settings: {fileID: 11400000, guid: dc5a169419fa04987b057f65238cf3ba, type: 2}

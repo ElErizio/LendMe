@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -35,7 +36,7 @@ public class Player : MonoBehaviour
         vida--;
         if (vida <= 0)
         {
-            MostrardefeatPanel();
+            SceneManager.LoadScene("Perdiste");
         }
         return vida;
     }
@@ -44,9 +45,9 @@ public class Player : MonoBehaviour
     {
         puntos += cantidad;
         ActualizarPuntosTexto();
-        if (puntos >= 00)
+        if (puntos >= 1500)
         {
-            MostrarPanelVictoria();
+            SceneManager.LoadScene("Ganaste");
         }
     }
 
